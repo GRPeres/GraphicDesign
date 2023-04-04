@@ -12,20 +12,20 @@ void irParaXY(int x, int y) {
 
 void planoCartesiano(void) {
     int vertical, horizontal;
-    for (vertical = 14; vertical < 55 ; vertical++) {//Reta que separa o plano na vertical
-        irParaXY(118, vertical);
+    for (vertical = 0; vertical < 34 ; vertical++) {//Reta que separa o plano na vertical
+        irParaXY(50, vertical);
         printf("|");
     }
-    for (horizontal = 18; horizontal < 219; horizontal++) {//Reta que separa o plano na horizontal
-        irParaXY(horizontal, 34);
+    for (horizontal = 0; horizontal < 120; horizontal++) {//Reta que separa o plano na horizontal
+        irParaXY(horizontal, 17);
         printf("-");
     }
-    irParaXY(118, 34);
+    irParaXY(50, 17);
     printf("X");//Ponto central
 }
 
 void printei(int x, int y){
-    irParaXY(118 + x, 34 - y);
+    irParaXY(50 + x,17-y);
     printf("F");
 }
 
@@ -104,11 +104,23 @@ void bresenhamcirc(int r){
 }
 
 int main(){
+    int n,x1=0,x2=0,y1=0,y2=0;
     printf("Escolha o número referente ao desafio desejado: \n (0) - Sair \n (1) - Imprime uma reta (Algoritmo DDA) \n (2) - Imprime uma reta (Algoritmo de Bresenham) \n (3) - Imprime o tracado de um circulo (Algoritmo de Bresenham)");
-    //planoCartesiano();
-    bresenham(0,0,10,7);
-    //DDA(0,0,10,7);
-    //bresenhamcirc(8);
-
+    scanf("%d",&n);
+    planoCartesiano();
+    switch(n){
+    case 1:
+        scanf("%d%d%d%d",&x2,&y2,&x1,&y1);
+        DDA(x2,y2,x1,y1);
+        break;
+    case 2:
+        scanf("%d%d%d%d",&x1,&y1,&x2,&y2);
+        bresenham(x1,y1,x2,y2);
+        break;
+    case 3:
+        scanf("%d",&x1);
+        bresenhamcirc(x1);
+    default:
+    }
     return 0;
 }
