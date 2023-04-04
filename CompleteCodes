@@ -1,64 +1,114 @@
 #include <stdio.h>
 #include <math.h>
+#include <windows.h>
 
-int main()
-{
-   
+//Método que faz o apontamento das coordenadas X e Y
+void irParaXY(int x, int y) {
+    COORD coord;
+    coord.X = (short) x;
+    coord.Y = (short) y;
+    SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
 }
-void bresenham(int x1, int y1, int x2, int y2)
-{
- int dx,dy,p,p2,xy2,x,y,xf;
- dx = x2-x1;
- dy = y2-y1;
- p = 2 * dy - dx;
- p2 = 2 * dy; //incrementa E
- xy2 = 2 * (dy-dx); //incrementa NE
- if (x1>x2)
- {x = x2; y = y2; xf = x1; }
- else
- {x = x1; y = y1; xf = x2; }
- printf("(%d,%d)\n p=%d \n p = p + 2dy - 2dx \n",x,y,p);
- while (x<xf)
- {
- x++;
- if (p<0)
- p += p2;
- else
- {
- y++;
- p += xy2;
- }
-  printf("(%d,%d)\n p=%d \n p = p + 2dy\n",x,y,p);
- }
+
+void planoCartesiano(void) {
+    int vertical, horizontal;
+    for (vertical = 14; vertical < 55 ; vertical++) {//Reta que separa o plano na vertical
+        irParaXY(118, vertical);
+        printf("|");
+    }
+    for (horizontal = 18; horizontal < 219; horizontal++) {//Reta que separa o plano na horizontal
+        irParaXY(horizontal, 34);
+        printf("-");
+    }
+    irParaXY(118, 34);
+    printf("X");//Ponto central
+}
+
+void printei(int x, int y){
+    irParaXY(118 + x, 34 - y);
+    printf("F");
+}
+
+void bresenham(int x1, int y1, int x2, int y2){
+    int dx,dy,p,p2,xy2,x,y,xf;
+    dx = x2-x1;
+    dy = y2-y1;
+    p = 2 * dy - dx;
+    p2 = 2 * dy; //incrementa E
+    xy2 = 2 * (dy-dx); //incrementa NE
+    if (x1>x2){
+            x = x2; y = y2; xf = x1;
+        }
+    else{
+            x = x1; y = y1; xf = x2;
+        }
+    printei(x,y);
+    while (x<xf){
+        x++;
+        if (p<0){
+        p += p2;
+        }
+        else{
+            y++;
+            p += xy2;
+        }
+        printei(x,y);
+    }
 }
 void DDA(int X2,int Y2,int X1,int Y1)
 {
     float step = fmax(fabs(X2 - X1),fabs(Y2 - Y1));
     float Xinc = (X2 - X1)/step;
     float Yinc = (Y2 - Y1)/step;
-    printf("%f \n",Xinc);
-    printf("%f \n \n ",Yinc);
     float Xf = X1;
     float Yf = Y1;
-    if(Xinc == 1){
+    printei(Xf,Yf);
+    if(Xinc == 1 || Xinc == -1){
         for(int i = 0; i < fabs(X2 - X1);i++){
             Xf += Xinc;
             Yf += Yinc;
-            printf("%f \n",Xf);
-            printf("%f  \n \n",Yf);
+            printei(Xf,Yf);
         }
     }
-    if(Yinc == 1){
+    if(Yinc == 1|| Yinc == -1){
         for(int i = 0; i < fabs(Y2 - Y1);i++){
             Xf += Xinc;
             Yf += Yinc;
-            printf("%f \n",Xf);
-            printf("%f  \n \n",Yf);
+            printei(Xf,Yf);
         }
     }
 }
-void bresenhamcirc(int r,)
-{
-    int xi = 0, yi = r,p=1-r;
-    
+void bresenhamcirc(int r){
+    int p=1-r, y = r;
+    for(int x = 0; x < r && x < y; x++){
+        if(p < 0){
+            p = p+2*x+1;
+        }
+        else{
+            y--;
+            p = p+2*x+1-2*y;
+        }
+        //1quad
+        printei(x,y);
+        printei(y,x);
+        //2quad
+        printei(-x,y);
+        printei(y,-x);
+        //3quad
+        printei(-x,-y);
+        printei(-y,-x);
+        //4quad
+        printei(x,-y);
+        printei(-y,x);
+    }
+}
+
+int main(){
+    printf("Escolha o número referente ao desafio desejado: \n (0) - Sair \n (1) - Imprime uma reta (Algoritmo DDA) \n (2) - Imprime uma reta (Algoritmo de Bresenham) \n (3) - Imprime o tracado de um circulo (Algoritmo de Bresenham)");
+    //planoCartesiano();
+    bresenham(0,0,10,7);
+    //DDA(0,0,10,7);
+    //bresenhamcirc(8);
+
+    return 0;
 }
