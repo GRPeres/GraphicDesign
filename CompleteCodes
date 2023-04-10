@@ -110,17 +110,50 @@ int main(){
     planoCartesiano();
     switch(n){
     case 1:
+        irParaXY(0,0);
+        printf("Digite 4 numeros, correspondetes as variaveis (x1,y1) e (x2,y2) que formam as extremidades da reta");
+        irParaXY(0,1);
+        printf("                                                                                                  ");
+        irParaXY(0,2);
+        printf("                                                                                                  ");
+        irParaXY(0,3);
+        printf("                                                                                                  ");
+        irParaXY(0,4);
+        printf("                                                                                                  ");
+        irParaXY(0,1);
         scanf("%d%d%d%d",&x2,&y2,&x1,&y1);
         DDA(x2,y2,x1,y1);
         break;
     case 2:
+        irParaXY(0,0);
+        printf("Digite 4 numeros, correspondetes as variaveis (x1,y1) e (x2,y2) que formam as extremidades da reta");
+        irParaXY(0,1);
+        printf("                                                                                                  ");
+        irParaXY(0,2);
+        printf("                                                                                                  ");
+        irParaXY(0,3);
+        printf("                                                                                                  ");
+        irParaXY(0,4);
+        printf("                                                                                                  ");
+        irParaXY(0,1);
         scanf("%d%d%d%d",&x1,&y1,&x2,&y2);
         bresenham(x1,y1,x2,y2);
         break;
     case 3:
+        irParaXY(0,0);
+        printf("Digite 1 numero, correspondente ao raio do circulo");
+        irParaXY(0,1);
+        printf("                                                                                                  ");
+        irParaXY(0,2);
+        printf("                                                                                                  ");
+        irParaXY(0,3);
+        printf("                                                                                                  ");
+        irParaXY(0,4);
+        printf("                                                                                                  ");
+        irParaXY(0,1);
         scanf("%d",&x1);
         bresenhamcirc(x1);
-    default:
     }
+    irParaXY(0,1);
     return 0;
 }
